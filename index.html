@@ -2,14 +2,33 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js"></script>
+    <script src="scripts.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
-    <div id="header"><h1>Tic-Tac-Toe</h1></div>
+    <div id="header">
+        <h1>Tic-Tac-Toe</h1>    
+    </div>
+
     <div id="gameboard">
+        <div id="startGame"><button id="startBtn">Start Game!</button></div>
+        <div id="playersDiv">
+            <button>Player 1: Select Name</button>
+            <dialog id="nameSelectForm">
+                <div>
+                <form>
+                    <label for="playerName">Enter Player Name:</label>
+                    <input type="text" id="playerName" name="playerName" placeholder="Player1" required><br>
+                    <label for="submitBtn">Enter</label>
+                    <button type="submit" id="submitBtn" name="submitBtn" value="Submit Name"></button>
+                </form>
+                </div>
+            </dialog>
+            <div id="playerOneDiv"><!-- JS will add info--></div>
+            <div id="playerTwoDiv"><!-- JS will add info--></div>
+        </div>
         <div id="game-area">
             <div class="cell" id="cell-0"></div>
             <div class="cell" id="cell-1"></div>
