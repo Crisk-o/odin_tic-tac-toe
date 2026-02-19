@@ -6,20 +6,33 @@ body {
 }
 #header {
     display: flex;
+    flex-direction: column;
     margin: auto;
     width: 100vw;
     align-items: center;
     justify-content: center;
-    background-color: purple;
+    background-color: #F0EAD6;
     font-size: 26px;
-    color: white;
+    color: black;
+    box-shadow: 0px 5px 15px ;
+}
+#startGame {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+#startGameBtn{
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
 }
 #gameboard {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    background-color: lightcoral;
+    background-color: rgba(0, 0, 80, 0.733);
 }
 #game-area{
     display: grid;
@@ -31,8 +44,11 @@ body {
     align-content: center;
     justify-content: center;
     height: calc(100vh - 100px);
-    background-color: lightslategray;
-    border: 2px solid red;
+    background-color: #6699CC;
+}
+.hidden{
+    display: none;
+    visibility: hidden;
 }
 .cell {
     width: 100px;
@@ -41,7 +57,9 @@ body {
     cursor: pointer;
     border: 2px solid black;
 }
-
+.cell:hover {
+    background-color: darkgreen;
+}
 #playersDiv{
     border: 1px solid black;
     width: 250px;
@@ -62,4 +80,27 @@ body {
     font-size: 24px;
     text-align: center;
     border: 1px solid black;
+}
+
+.endGameScreen{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    background-color: gold;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    width: 800px;
+    height: 600px;
+    border-radius: 15px;
+    border: 1px solid black;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+.endGameScreen > button {
+    width: 200px;
+    height: 50px;
+    
 }

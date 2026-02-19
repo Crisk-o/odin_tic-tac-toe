@@ -1,4 +1,3 @@
-
 function createPlayer(name, marker){
     return { 
         name: name, 
@@ -16,21 +15,37 @@ function createPlayer(name, marker){
             return `${this.name  + " " +  this.marker }`;
         }
     };
-}
+};
+const playerOneDiv = document.getElementById("playerOneDiv");
+const playerOneNamePlate = document.createElement('p');
+playerOneNamePlate.classList.add('playerNamePlates');
+// playerOneNamePlate.textContent = Game.getCurrentPlayer();
+// playerOneDiv.append(playerOneNamePlate);
 
-// only 1 instane of gameboard, so we can use it to store the state of the game.
+const playerTwoDiv = document.getElementById("playerTwoDiv");
+const playerTwoNamePlate = document.createElement('p');
+playerTwoNamePlate.classList.add('playerNamePlates');
+// playerTwoNamePlate.textContent = Game.getWaitingPlayer();
+// playerTwoDiv.append(playerTwoNamePlate);
+
+// grabbing all cells for later.
+const gameboard = document.getElementById('gameboard');
+const gamearea = document.getElementById('game-area');
+const cell0 = document.getElementById('cell-0');
+const cell1 = document.getElementById('cell-1');
+const cell2 = document.getElementById('cell-2');
+const cell3 = document.getElementById('cell-3');
+const cell4 = document.getElementById('cell-4');
+const cell5 = document.getElementById('cell-5');
+const cell6 = document.getElementById('cell-6');
+const cell7 = document.getElementById('cell-7');
+const cell8 = document.getElementById('cell-8');
+
 const createGameboard = (() => {
-    const cell0 = document.getElementById('cell-0');
-    const cell1 = document.getElementById('cell-1');
-    const cell2 = document.getElementById('cell-2');
-    const cell3 = document.getElementById('cell-3');
-    const cell4 = document.getElementById('cell-4');
-    const cell5 = document.getElementById('cell-5');
-    const cell6 = document.getElementById('cell-6');
-    const cell7 = document.getElementById('cell-7');
-    const cell8 = document.getElementById('cell-8');
-    return [cell0.textContent, cell1.textContent, cell2.textContent, cell3.textContent, cell4.textContent, cell5.textContent, cell6.textContent, cell7.textContent, cell8.textContent] 
-    
+    let gameboard = document.querySelectorAll('.cell');
+    gameboardArray = Array.from(gameboard);
+    return gameboardArray;
+    // return document.querySelectorAll('.cell')
 });
 
 const Game = (() => {
@@ -40,10 +55,12 @@ const Game = (() => {
     let waitingPlayer = player2;
     if(player1.getName() === player2.getName()){
         console.log("Players cannot have the same name. Please choose different names.");
-    }
-    let gameboard = createGameboard();  
+    };
+    // let gameboard = createGameboard();  
+    // gameboardArray = Array.from(gameboard);
+    let gameboardArray = createGameboard();
 
-    const getBoard = () =>  gameboard.join(", "); // returns the gameboard as a string for easier display
+    const getBoard = () => gameboardArray.forEach((cell) => console.log(cell.textContent));
     const getCurrentPlayer = () => currentPlayer.getName();
     const getWaitingPlayer = () => waitingPlayer.getName();
 
@@ -52,95 +69,170 @@ const Game = (() => {
             currentPlayer = player2;
             waitingPlayer = player1;
             playerTwoDiv.classList.toggle('currentPlayer');
-            playerOneDiv.classList.toggle('waitingPlayer');
+            
+            playerOneDiv.classList.toggle('currentPlayer');
             
         }
         else{
             currentPlayer = player1;
-            playerOneDiv.toggle('currentPlayer');
+            playerOneDiv.classList.toggle('currentPlayer');
             waitingPlayer = player2;
-            playerTwoDiv.toggle('waitingPlayer');
+            playerTwoDiv.classList.toggle('currentPlayer');
         }
     };
 
     // for use in makeMove function
     function checkGameOver(){
+        let result;
+        const endGameScreen = document.createElement('div');
+        endGameScreen.classList.add('endGameScreen');
+        const restartBtn = document.createElement('button');
+        restartBtn.textContent = "Restart Game";
+        restartBtn.addEventListener('click', () => {window.location.reload()});
+
         // Check for tie condition before checking for win condition
-        if(gameboard.every(cell => cell !== "")){
+        if(gameboardArray.every(cell => cell.textContent !== "")){
             console.log("It's a tie!");
+            result = "It's a tie!";
+            
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
         // checks for 3 matches in same row
-        if(gameboard[0] === gameboard[1] && gameboard[1] === gameboard[2] && gameboard[0] !== ""){
+        if(gameboardArray[0].textContent === gameboardArray[1].textContent && gameboardArray[1].textContent === gameboardArray[2].textContent && gameboardArray[0].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
-        else if(gameboard[3] === gameboard[4] && gameboard[4] === gameboard[5] && gameboard[3] !== ""){
+        else if(gameboardArray[3].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[5].textContent && gameboardArray[3].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
-        else if(gameboard[6] === gameboard[7] && gameboard[7] === gameboard[8] && gameboard[6] !== ""){
+        else if(gameboardArray[6].textContent === gameboardArray[7].textContent && gameboardArray[7].textContent === gameboardArray[8].textContent && gameboardArray[6].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
+
         }
 
         //checks for 3 matches in same column
-        if(gameboard[0] === gameboard[3] && gameboard[3] === gameboard[6] && gameboard[0] !== ""){
+        if(gameboardArray[0].textContent === gameboardArray[3].textContent && gameboardArray[3].textContent === gameboardArray[6].textContent && gameboardArray[0].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
-        else if(gameboard[1] === gameboard[4] && gameboard[4] === gameboard[7] && gameboard[1] !== ""){
+        else if(gameboardArray[1].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[7].textContent && gameboardArray[1].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
+
         }
-        else if(gameboard[2] === gameboard[5] && gameboard[5] === gameboard[8] && gameboard[2] !== ""){
+        else if(gameboardArray[2].textContent === gameboardArray[5].textContent && gameboardArray[5].textContent === gameboardArray[8].textContent && gameboardArray[2].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
 
         // checks for 3 matches diagonally
-        if(gameboard[0] === gameboard[4] && gameboard[4] === gameboard[8] && gameboard[0] !== ""){
+        if(gameboardArray[0].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[8].textContent && gameboardArray[0].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
+
         }
-        else if(gameboard[2] === gameboard[4] && gameboard[4] === gameboard[6] && gameboard[2] !== ""){
+        else if(gameboardArray[2].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[6].textContent && gameboardArray[2].textContent !== ""){
             console.log(`${waitingPlayer.getName()} wins!`);
+            result = (`${waitingPlayer.getName()} wins!`);
+            endGameScreen.textContent = result;
+            gamearea.classList.toggle('hidden');
+            gameboard.appendChild(endGameScreen);
         }
+        endGameScreen.appendChild(restartBtn);
+
     }
 
-    
     function makeMove(index){
-        console.log("Current game board: " + getBoard());
-        if(index < 0 || index > 9 || isNaN(index))
-        {
-            return "Index out of bounds";
+        // console.log("Current game board: " + getBoard());
+        if(gameboardArray[index].textContent === "X" || gameboardArray[index].textContent === "O"){
+            return console.log("Cell already occupied. Try again.");
         }
-        else if(gameboard[index] !== ""){
-            return "Cell already occupied";
-        }
-        else if (gameboard[index] === ""){
-            gameboard[index].textContent = currentPlayer.marker;
+        else if (gameboardArray[index].textContent === ""){
+            gameboardArray[index].textContent = currentPlayer.marker;
             switchPlayer();
         }
-        console.log("Board after " +  getWaitingPlayer() + "'s move: " + getBoard());
+        // console.log("Board after " +  getWaitingPlayer() + "'s move: " + getBoard());
         checkGameOver();
     };
 
-    return { player1, player2, getCurrentPlayer, getWaitingPlayer, makeMove };
+    return { player1, player2, getBoard, getCurrentPlayer, getWaitingPlayer, makeMove };
 })();
 
-const allCells = document.querySelectorAll('.cell');
-    allCells.forEach((cell) => {
-        cell.addEventListener('click', Game.makeMove);
-    });
-const playerOneDiv = document.getElementById("playerOneDiv");
-const playerOneNamePlate = document.createElement('p');
-playerOneNamePlate.classList.add('playerNamePlates');
+cell0.addEventListener('click', () => {
+    let index = 0;
+    Game.makeMove(index);
+});
+cell1.addEventListener('click', () => {
+    let index = 1;
+    Game.makeMove(index);
+});
+cell2.addEventListener('click', () => {
+    let index = 2;
+    Game.makeMove(index);
+});
+cell3.addEventListener('click', () => {
+    let index = 3;
+    Game.makeMove(index);
+});
+cell4.addEventListener('click', () => {
+    let index = 4;
+    Game.makeMove(index);
+});
+cell5.addEventListener('click', () => {
+    let index = 5;
+    Game.makeMove(index);
+});
+cell6.addEventListener('click', () => {
+    let index = 6;
+    Game.makeMove(index);
+});
+cell7.addEventListener('click', () => {
+    let index = 7;
+    Game.makeMove(index);
+});
+cell8.addEventListener('click', () => {
+    let index = 8;
+    Game.makeMove(index);
+});
+
 playerOneNamePlate.textContent = Game.getCurrentPlayer();
 playerOneDiv.append(playerOneNamePlate);
-
-const playerTwoDiv = document.getElementById("playerTwoDiv");
-const playerTwoNamePlate = document.createElement('p');
-playerTwoNamePlate.classList.add('playerNamePlates');
 playerTwoNamePlate.textContent = Game.getWaitingPlayer();
 playerTwoDiv.append(playerTwoNamePlate);
 
 
+const startGameBtn = document.getElementById('startGameBtn');
+startGameBtn.addEventListener('click', () => {
+    playerOneDiv.classList.add('currentPlayer');
+    // const gamearea = document.getElementById('game-area');
+    gamearea.classList.toggle("hidden");
 
-
-
+});
 
 
 
