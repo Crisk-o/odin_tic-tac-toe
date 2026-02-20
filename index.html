@@ -10,24 +10,39 @@
 <body>
     <div id="header">
         <h1>Tic-Tac-Toe</h1>    
-        <div id="startGame"><button id="startGameBtn">Start Game!</button></div>
+        <div id="startGameDiv"><button id="startGameBtn">Start Game!</button></div>
     </div>
 
     <div id="gameboard">
         <div id="playersDiv">
-            <button>Player 1: Select Name</button>
             <dialog id="nameSelectForm">
                 <div id="formDiv">
-                    <form>
+                    <form id="nameForm">
                         <label for="playerName">Enter Player Name:</label>
-                        <input type="text" id="playerName" name="playerName" placeholder="Player1" required><br>
-                        <label for="submitBtn">Enter</label>
-                        <button type="submit" id="submitBtn" name="submitBtn" value="Submit Name"></button>
+                        <input type="text" id="playerName" name="playerName" placeholder="Player" required><br>
+                        <label for="submitBtn"></label>
+                        <button type="submit" id="submitBtn" name="submitBtn" value="Submit Name">Set Name</button>
                     </form>
                 </div>
             </dialog>
-            <div id="playerOneDiv"><!-- JS will add info--></div>
-            <div id="playerTwoDiv"><!-- JS will add info--></div>
+            <div id="playerOneDiv">
+                <button class="setNameBtn" id="set-p1">Player 1: Set Name</button>
+                <!-- JS will add name-->
+            </div>
+            <dialog id="nameSelectForm2">
+                    <div id="formDiv2">
+                        <form id="nameForm2">
+                            <label for="playerName2">Enter Player Name:</label>
+                            <input type="text" id="playerName2" name="playerName2" placeholder="Player" required><br>
+                            <label for="submitBtn"></label>
+                            <button type="submit" id="submitBtn" name="submitBtn" value="Submit Name">Set Name</button>
+                        </form>
+                    </div>
+            </dialog>
+            <div id="playerTwoDiv">
+                <button class="setNameBtn" id="set-p2">Player 2: Set Name</button>
+                <!-- JS will add player name-->
+            </div>
         </div>
         <div id="game-area" class="hidden">
             <div class="cell" id="cell-0"></div>

@@ -16,17 +16,7 @@ function createPlayer(name, marker){
         }
     };
 };
-const playerOneDiv = document.getElementById("playerOneDiv");
-const playerOneNamePlate = document.createElement('p');
-playerOneNamePlate.classList.add('playerNamePlates');
-// playerOneNamePlate.textContent = Game.getCurrentPlayer();
-// playerOneDiv.append(playerOneNamePlate);
 
-const playerTwoDiv = document.getElementById("playerTwoDiv");
-const playerTwoNamePlate = document.createElement('p');
-playerTwoNamePlate.classList.add('playerNamePlates');
-// playerTwoNamePlate.textContent = Game.getWaitingPlayer();
-// playerTwoDiv.append(playerTwoNamePlate);
 
 // grabbing all cells for later.
 const gameboard = document.getElementById('gameboard');
@@ -45,19 +35,13 @@ const createGameboard = (() => {
     let gameboard = document.querySelectorAll('.cell');
     gameboardArray = Array.from(gameboard);
     return gameboardArray;
-    // return document.querySelectorAll('.cell')
 });
 
 const Game = (() => {
-    const player1 = createPlayer("Player 1", "X" );
-    const player2 = createPlayer("Player 2", "O" );
+    let player1 = createPlayer("Player 1", "X" );
+    let player2 = createPlayer("Player 2", "O" );
     let currentPlayer = player1;
     let waitingPlayer = player2;
-    if(player1.getName() === player2.getName()){
-        console.log("Players cannot have the same name. Please choose different names.");
-    };
-    // let gameboard = createGameboard();  
-    // gameboardArray = Array.from(gameboard);
     let gameboardArray = createGameboard();
 
     const getBoard = () => gameboardArray.forEach((cell) => console.log(cell.textContent));
@@ -68,16 +52,16 @@ const Game = (() => {
         if(currentPlayer === player1){
             currentPlayer = player2;
             waitingPlayer = player1;
-            playerTwoDiv.classList.toggle('currentPlayer');
+            playerTwoNamePlate.classList.toggle('currentPlayer');
             
-            playerOneDiv.classList.toggle('currentPlayer');
+            playerOneNamePlate.classList.toggle('currentPlayer');
             
         }
         else{
             currentPlayer = player1;
-            playerOneDiv.classList.toggle('currentPlayer');
+            playerOneNamePlate.classList.toggle('currentPlayer');
             waitingPlayer = player2;
-            playerTwoDiv.classList.toggle('currentPlayer');
+            playerTwoNamePlate.classList.toggle('currentPlayer');
         }
     };
 
@@ -92,47 +76,39 @@ const Game = (() => {
 
         // Check for tie condition before checking for win condition
         if(gameboardArray.every(cell => cell.textContent !== "")){
-            console.log("It's a tie!");
             result = "It's a tie!";
-            
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
             gameboard.appendChild(endGameScreen);
         }
         // checks for 3 matches in same row
         if(gameboardArray[0].textContent === gameboardArray[1].textContent && gameboardArray[1].textContent === gameboardArray[2].textContent && gameboardArray[0].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
             gameboard.appendChild(endGameScreen);
         }
         else if(gameboardArray[3].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[5].textContent && gameboardArray[3].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
             gameboard.appendChild(endGameScreen);
         }
         else if(gameboardArray[6].textContent === gameboardArray[7].textContent && gameboardArray[7].textContent === gameboardArray[8].textContent && gameboardArray[6].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
             gameboard.appendChild(endGameScreen);
 
         }
-
         //checks for 3 matches in same column
         if(gameboardArray[0].textContent === gameboardArray[3].textContent && gameboardArray[3].textContent === gameboardArray[6].textContent && gameboardArray[0].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
             gameboard.appendChild(endGameScreen);
         }
         else if(gameboardArray[1].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[7].textContent && gameboardArray[1].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
@@ -140,7 +116,6 @@ const Game = (() => {
 
         }
         else if(gameboardArray[2].textContent === gameboardArray[5].textContent && gameboardArray[5].textContent === gameboardArray[8].textContent && gameboardArray[2].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
@@ -149,7 +124,6 @@ const Game = (() => {
 
         // checks for 3 matches diagonally
         if(gameboardArray[0].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[8].textContent && gameboardArray[0].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
@@ -157,7 +131,6 @@ const Game = (() => {
 
         }
         else if(gameboardArray[2].textContent === gameboardArray[4].textContent && gameboardArray[4].textContent === gameboardArray[6].textContent && gameboardArray[2].textContent !== ""){
-            console.log(`${waitingPlayer.getName()} wins!`);
             result = (`${waitingPlayer.getName()} wins!`);
             endGameScreen.textContent = result;
             gamearea.classList.toggle('hidden');
@@ -183,6 +156,7 @@ const Game = (() => {
     return { player1, player2, getBoard, getCurrentPlayer, getWaitingPlayer, makeMove };
 })();
 
+// adding listeners for each cell
 cell0.addEventListener('click', () => {
     let index = 0;
     Game.makeMove(index);
@@ -219,19 +193,56 @@ cell8.addEventListener('click', () => {
     let index = 8;
     Game.makeMove(index);
 });
-
-playerOneNamePlate.textContent = Game.getCurrentPlayer();
+/////
+/* grabs playerdivs, nameplates, adds styles, */
+const playerOneDiv = document.getElementById("playerOneDiv");
+const playerOneNamePlate = document.createElement('p');
+playerOneNamePlate.classList.add('playerNamePlates');
+const playerTwoDiv = document.getElementById("playerTwoDiv");
+const playerTwoNamePlate = document.createElement('p');
+playerTwoNamePlate.classList.add('playerNamePlates');
+playerOneNamePlate.textContent = Game.player1.getName();
 playerOneDiv.append(playerOneNamePlate);
-playerTwoNamePlate.textContent = Game.getWaitingPlayer();
+playerTwoNamePlate.textContent = Game.player2.getName();
 playerTwoDiv.append(playerTwoNamePlate);
 
+/* Grab form dialog, setNameBtns for p1 & p2, adds eventListeners */
+const formDialog = document.getElementById('nameSelectForm');
+const formDialog2 = document.getElementById('nameSelectForm2');
+const setNameP1Btn = document.getElementById('set-p1');
+const setNameP2Btn = document.getElementById('set-p2');
 
+setNameP1Btn.addEventListener('click', () => {
+    formDialog.showModal();
+});
+
+setNameP2Btn.addEventListener('click', () => {
+    formDialog2.showModal();
+});
+const form = document.getElementById('nameForm');
+const form2 = document.getElementById('nameForm2');
+form.addEventListener('submit', (event) => {
+    const nameInput = document.getElementById('playerName');
+    playerOneNamePlate.textContent = nameInput.value;   
+    formDialog.close();
+    event.preventDefault()
+    form.reset(); 
+});
+form2.addEventListener('submit', (event) => {
+    const nameInput = document.getElementById('playerName2');
+    playerTwoNamePlate.textContent = nameInput.value;   
+    formDialog2.close();
+    event.preventDefault()
+    form2.reset(); 
+});
+
+
+// grabs start game Btn and reveals gameboard
 const startGameBtn = document.getElementById('startGameBtn');
 startGameBtn.addEventListener('click', () => {
-    playerOneDiv.classList.add('currentPlayer');
-    // const gamearea = document.getElementById('game-area');
+    playerOneNamePlate.classList.add('currentPlayer');
     gamearea.classList.toggle("hidden");
-
+    
 });
 
 
